@@ -1,12 +1,39 @@
-# React + Vite
+# 📚 리렌더링 개념 & 최적화 방법
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🧠 목표
 
-Currently, two official plugins are available:
+- 어떤 컴포넌트가 언제 리렌더링 되는지 확인
+- 불필요한 렌더링의 원인 이해
+- `React.memo`, `useCallback` 최적화 기법 체감
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ⚙️ 과제 설명
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Todo 앱에서 각 컴포넌트의 렌더링 횟수 추적
+- 불필요한 렌더링을 로그 또는 UI로 시각화
+
+---
+
+## ❓ 의문점 & 해설
+
+### 1. 왜 `TodoInput`과 `TodoList`가 함께 렌더링될까?
+
+- `input`, `tasks` 상태가 상위 컴포넌트(`App`)에 함께 존재
+- `input`만 변경해도 `App`이 렌더링되며 하위 컴포넌트도 모두 렌더링됨
+
+### 2. 초기 렌더링 횟수가 3인 이유
+
+- `App`, `TodoInput`, `TodoList` 세 컴포넌트가 각각 렌더링되기 때문
+
+---
+
+## 🧩 최적화 방법
+
+### ✅ `React.memo`
+
+> props가 변경되지 않으면 컴포넌트를 리렌더링하지 않음  
+> 상위 상태 변화가 하위에 영향을 주는 것을 차단
+
+### ✅ `useCallback`
+> useCallback을 함수에 적용해서 콜백함수의 불필요한 재생성을 방지했습니다.
